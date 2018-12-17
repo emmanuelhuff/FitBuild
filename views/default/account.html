@@ -1,0 +1,115 @@
+{{ extend 'layout.html'}}
+
+{{block head}}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var Save_Plan = "{{=URL('api', 'Save_Plan') }}";
+    var get_all_plans = "{{=URL('api', 'get_all_plans') }}";
+    var get_all_workouts = "{{=URL('api', 'get_all_workouts') }}";
+    var delete_post = "{{=URL('api', 'delete') }}";
+
+    var get_all_movies = "{{=URL('api', 'get_all_movies') }}";
+    var get_all_replies = "{{=URL('api', 'get_all_replies') }}";
+    var getcurUser = "{{=URL('api', 'getcurUser') }}";
+    var insert_movie = "{{=URL('api', 'insert_movie', user_signature=True) }}";
+    var insert_reply = "{{=URL('api', 'insert_reply', user_signature=True) }}";
+    var set_thumb = "{{=URL('api', 'set_thumb' , user_signature=True)}}";
+    var edit_post = "{{=URL('default', 'edit')}}";
+    var set_reply = "{{=URL('api', 'set_reply' , user_signature=True)}}";
+
+</script>
+{{end}}
+
+<link rel="stylesheet" href="{{=URL('static', 'font-awesome-4.6.3/css/font-awesome.min.css')}}">
+<link rel="stylesheet" href="{{=URL('static', 'css/default.css')}}">
+
+<div id="app">
+
+<!-- start header -->
+{{include 'default/header.html'}}
+<!-- end header -->
+
+<div id="headerbg"><p class="text1">&#8220;To begin, we must first BUILD&#8221; <br />
+	-Anonymous</p>
+</div>
+
+<!-- start latest-post -->
+<div id="latest-post" class="post">
+</div>
+
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+	        <h1 class="title"><u>Your Account</u></h1>
+
+			<div class="entry">
+                <p> Hi! This is your account page. Here you can look at, delete, or edit your current plans. <br> You can also create a new one altogether. </p>
+
+                    <div v-for="userPlan in plans">
+                       <div v-if="userPlan.name == selected">
+                            <div id = "showAdd"> &nbsp; &nbsp;
+                                <a> <font size="+2"> Add a Plan:</font>  </a> &nbsp;
+                                <a href="plan.html?planID=-1"> <i class="fa fa-plus fa-2x" ></i></a>
+                                &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+
+                                <a> <font size="+2"> Delete Current Plan:</font> </a> &nbsp;
+                                <a href="plan.html?planID=-1"> <i class="fa fa-trash fa-2x" v-on:click="deletePost(userPlan.id)"></i></a>
+                                &nbsp; &nbsp;&nbsp; &nbsp;
+
+                                <a> <font size="+2"> Edit Current Plan:</font> </a> &nbsp;
+                                <a :href="'plan.html?planId=' + userPlan.id"><i class="fa fa-edit fa-2x"></i></a>
+                       </div>
+                    </div>
+
+                </div> <br>
+
+
+                        <p>Current Plan:</p> <select v-model="selected">
+                                        <option v-for="userPlan in plans" v7-bind:value="userPlan.id">
+                                            ${ userPlan.name }
+                                        </option>
+                                    </select>
+
+
+                            <div v-for="userPlan in plans">
+                               <div v-if="userPlan.name == selected">
+                                   <div v-if="startNewPlan()">
+                                       <div v-for="userWorkoutDay in workouts">
+                                           <div v-if="userWorkoutDay.userPlan_id == userPlan.id">
+                                               <div v-if="dayOfWeekChanged(userWorkoutDay.dayOfWeek_id)">
+                                                   <div v-if="userWorkoutDay.userPlan_id == userPlan.id">
+                                                       <p>${ weekdays[userWorkoutDay.dayOfWeek_id] }</p>
+                                                       <ul>
+                                                           <div v-for="userWorkout in workouts">
+                                                               <div v-if="userWorkout.userPlan_id == userPlan.id && userWorkout.dayOfWeek_id == userWorkoutDay.dayOfWeek_id">
+                                                                   <li><a :href=" userWorkout.workoutLink " target="_new">${ userWorkout.workoutName }</a> &nbsp; ${ userWorkout.workoutText } &nbsp;  </li>
+                                                               </div>
+                                                           </div>
+                                                       </ul>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                            </div>
+			</div>
+	</div>
+	<br>
+<p> &nbsp;  Currently logged in as: ${ curUser }</p>
+	<div id="sidebar">
+		<ul>
+
+		</ul>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end sidebar -->
+</div>
+<!-- end page -->
+<br><br><br><br><br>
+
+</div>
+<script src="{{=URL('static','js/index.js')}}"></script>
+
+

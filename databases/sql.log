@@ -1,0 +1,723 @@
+timestamp: 2018-10-28T13:56:01.345000
+CREATE TABLE "auth_user"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "first_name" CHAR(128),
+    "last_name" CHAR(128),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "registration_key" CHAR(512),
+    "reset_password_key" CHAR(512),
+    "registration_id" CHAR(512)
+);
+success!
+timestamp: 2018-10-28T13:56:01.374000
+CREATE TABLE "auth_group"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "role" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2018-10-28T13:56:01.389000
+CREATE TABLE "auth_membership"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
+);
+success!
+timestamp: 2018-10-28T13:56:01.409000
+CREATE TABLE "auth_permission"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
+    "name" CHAR(512),
+    "table_name" CHAR(512),
+    "record_id" INTEGER
+);
+success!
+timestamp: 2018-10-28T13:56:01.427000
+CREATE TABLE "auth_event"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "time_stamp" TIMESTAMP,
+    "client_ip" CHAR(512),
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "origin" CHAR(512),
+    "description" TEXT
+);
+success!
+timestamp: 2018-10-28T13:56:01.449000
+CREATE TABLE "auth_cas"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "service" CHAR(512),
+    "ticket" CHAR(512),
+    "renew" CHAR(1)
+);
+success!
+timestamp: 2018-10-31T19:00:37.279032
+CREATE TABLE "movies"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "title" CHAR(512),
+    "description" TEXT,
+    "rating" CHAR(512)
+);
+success!
+timestamp: 2018-11-01T20:30:22.974586
+CREATE TABLE "thumbs"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "movie_id" INTEGER REFERENCES "movies" ("id") ON DELETE CASCADE  ,
+    "thumb_state" CHAR(512)
+);
+success!
+timestamp: 2018-11-06T22:18:26.142000
+CREATE TABLE "checklist"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "title" CHAR(512),
+    "memo" TEXT,
+    "updated_on" TIMESTAMP
+);
+success!
+timestamp: 2018-11-06T22:18:26.184000
+ALTER TABLE "thumbs" ADD "user_email" CHAR(512);
+success!
+timestamp: 2018-11-06T23:38:36.515000
+ALTER TABLE "movies" ADD "user_email" CHAR(512);
+success!
+timestamp: 2018-11-20T13:56:40.687000
+CREATE TABLE "replies"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "movie_id" INTEGER REFERENCES "movies" ("id") ON DELETE CASCADE  ,
+    "reply" TEXT
+);
+success!
+timestamp: 2018-12-03T20:29:06.177000
+CREATE TABLE "userPlans"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-03T20:29:06.200000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" INTEGER REFERENCES "userPlans" ("id") ON DELETE CASCADE  ,
+    "questionId" INTEGER,
+    "answerId" INTEGER
+);
+success!
+timestamp: 2018-12-03T20:29:06.215000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" INTEGER REFERENCES "userPlans" ("id") ON DELETE CASCADE  ,
+    "dayOfWeekId" INTEGER,
+    "workoutId" INTEGER,
+    "workoutText" CHAR(512)
+);
+success!
+timestamp: 2018-12-03T22:00:57.964000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-03T22:14:53.501000
+ALTER TABLE "userAnswers" ADD "question_id" INTEGER;
+timestamp: 2018-12-03T22:14:53.542000
+ALTER TABLE "userAnswers" ADD "answer_id" INTEGER;
+success!
+timestamp: 2018-12-03T22:14:53.580000
+ALTER TABLE "userWorkout" ADD "workoutLink" CHAR(512);
+timestamp: 2018-12-03T22:14:53.588000
+ALTER TABLE "userWorkout" ADD "workoutName" CHAR(512);
+timestamp: 2018-12-03T22:14:53.596000
+ALTER TABLE "userWorkout" ADD "dayOfWeek_id" INTEGER;
+timestamp: 2018-12-03T22:14:53.603000
+ALTER TABLE "userWorkout" ADD "workout_id" INTEGER;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-03T23:37:44.969000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-03T23:37:45.003000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-03T23:37:45.054000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-03T23:40:08.754000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-03T23:40:08.781000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-03T23:40:08.798000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+timestamp: 2018-12-04T21:33:11.174000
+ALTER TABLE "userWorkout" ADD "user_email" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-04T21:44:34.403000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-04T21:44:34.435000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-04T21:44:34.451000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-04T21:46:30.395000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-04T21:46:30.411000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-04T21:46:30.427000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-04T22:28:18.803000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-04T22:28:18.949000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-04T22:28:19.006000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-06T11:31:35.377000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-06T11:31:35.393000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-06T11:31:35.412000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-07T17:10:09.200000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-07T17:10:09.227000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-07T17:10:09.251000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-07T17:40:48.597000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-07T17:40:48.620000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-07T17:40:48.635000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-07T22:19:50.115000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-07T22:19:50.137000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-07T22:19:50.154000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-09T19:02:52.893000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-09T19:02:52.916000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-09T19:02:52.935000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!
+DROP TABLE "userPlan";
+success!
+DROP TABLE "userAnswers";
+success!
+DROP TABLE "userWorkout";
+success!
+timestamp: 2018-12-09T20:47:25.070000
+CREATE TABLE "userPlan"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "planName" CHAR(512)
+);
+success!
+timestamp: 2018-12-09T20:47:25.103000
+CREATE TABLE "userAnswers"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "userPlan_id" CHAR(512),
+    "question_id" INTEGER,
+    "answer_id" INTEGER
+);
+success!
+timestamp: 2018-12-09T20:47:25.122000
+CREATE TABLE "userWorkout"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "userPlan_id" CHAR(512),
+    "dayOfWeek_id" INTEGER,
+    "workout_id" INTEGER,
+    "workoutName" CHAR(512),
+    "workoutText" CHAR(512),
+    "workoutLink" CHAR(512)
+);
+success!

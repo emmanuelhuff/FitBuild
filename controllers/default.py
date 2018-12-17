@@ -1,0 +1,114 @@
+# -*- coding: utf-8 -*-
+# -------------------------------------------------------------------------
+# This is a sample controller
+# this file is released under public domain and you can use without limitations
+# -------------------------------------------------------------------------
+
+# ---- example index page ----
+def index():
+    return dict()
+
+@auth.requires_login()
+def plan():
+    return dict()
+
+@auth.requires_login()
+def account():
+    return dict()
+
+def find():
+    return dict()
+
+def about():
+    return dict()
+
+def contact():
+    return dict()
+
+def header():
+    return dict()
+
+# ---- API (example) -----
+@auth.requires_login()
+def api_get_user_email():
+    if not request.env.request_method == 'GET': raise HTTP(403)
+    return response.json({'status':'success', 'email':auth.user.email})
+
+# ---- Smart Grid (example) -----
+@auth.requires_membership('admin') # can only be accessed by members of admin groupd
+def grid():
+    response.view = 'generic.html' # use a generic view
+    tablename = request.args(0)
+    if not tablename in db.tables: raise HTTP(403)
+    grid = SQLFORM.smartgrid(db[tablename], args=[tablename], deletable=False, editable=False)
+    return dict(grid=grid)
+
+@auth.requires_login()
+def delete():
+    q = (((db.movies.id == request.vars.id) & (db.movies.user_email == auth.user.email)))
+
+    db(q).delete()
+    redirect(URL('default', 'index'))
+
+
+@auth.requires_login()
+def edit():
+    if request.args(0) is None:
+        # We send you back to the general index
+        redirect(URL('default', 'index'))
+    else:
+        # a checklist is specified. We need to check that it exists, and that the user
+        # is the author.
+        # We use .first() to get either the first element or None, rather than an iterator.
+
+        q = ((db.movies.user_email == auth.user.email) & (db.movies.id == request.vars.id))
+
+        # I fish out the first element of the query, if there is one, otherwise None
+        cl = db(q).select().first()
+        if cl is None:
+            session.flash = T('Not Authorized')
+            redirect(URL('default','index'))
+
+        # Note to always check invariants
+        # Here, the invariant is that the checklist is known to exist.
+        # Is this an edit form?
+        else:
+            form = SQLFORM(db.movies, record=cl, deletable=False)
+            session.flash = T('Blog Post edited.')
+            redirect(URL('default', 'index'))
+    return dict(form=form)
+
+
+
+# ---- Embedded wiki (example) ----
+def wiki():
+    auth.wikimenu() # add the wiki to the menu
+    return auth.wiki() 
+
+# ---- Action for login/register/etc (required for auth) -----
+def user():
+    """
+    exposes:
+    http://..../[app]/default/user/login
+    http://..../[app]/default/user/logout
+    http://..../[app]/default/user/register
+    http://..../[app]/default/user/profile
+    http://..../[app]/default/user/retrieve_password
+    http://..../[app]/default/user/change_password
+    http://..../[app]/default/user/bulk_register
+    use @auth.requires_login()
+        @auth.requires_membership('group name')
+        @auth.requires_permission('read','table name',record_id)
+    to decorate functions that need access control
+    also notice there is http://..../[app]/appadmin/manage/auth to allow administrator to manage users
+    """
+    return dict(form=auth())
+
+# ---- action to server uploaded static content (required) ---
+@cache.action()
+def download():
+    """
+    allows downloading of uploaded files
+    http://..../[app]/default/download/[filename]
+    """
+    return response.download(request, db)

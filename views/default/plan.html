@@ -1,0 +1,165 @@
+{{ extend 'layout.html'}}
+
+{{block head}}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var Save_Plan = "{{=URL('api', 'Save_Plan') }}";
+    var get_all_plans = "{{=URL('api', 'get_all_plans') }}";
+    var get_all_workouts = "{{=URL('api', 'get_all_workouts') }}";
+    var get_all_answers = "{{=URL('api', 'get_all_answers') }}";
+
+    var get_all_movies = "{{=URL('api', 'get_all_movies') }}";
+    var get_all_replies = "{{=URL('api', 'get_all_replies') }}";
+    var getcurUser = "{{=URL('api', 'getcurUser') }}";
+    var insert_movie = "{{=URL('api', 'insert_movie', user_signature=True) }}";
+    var insert_reply = "{{=URL('api', 'insert_reply', user_signature=True) }}";
+    var set_thumb = "{{=URL('api', 'set_thumb' , user_signature=True)}}";
+    var delete_post = "{{=URL('default', 'delete') }}";
+    var edit_post = "{{=URL('default', 'edit')}}";
+    var set_reply = "{{=URL('api', 'set_reply' , user_signature=True)}}";
+</script>
+{{end}}
+
+<link rel="stylesheet" href="{{=URL('static', 'fontawesome-free-5.5.0-web/css/all.css')}}">
+<link rel="stylesheet" href="{{=URL('static', 'css/default.css')}}">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>
+    $( function() {
+    $( "#slider-freq" ).slider({
+      range: "min",
+      value: 3,
+      min: 1,
+      max: 5,
+      slide: function( event, ui ) {
+        $( "#freq" ).val(  ui.value );
+      }
+    });
+    $( "#freq" ).val( $( "#slider-freq" ).slider( "value" ) );
+    } );
+</script>
+
+<div id="app">
+
+<!-- start header -->
+{{include 'default/header.html'}}
+<!-- end header -->
+
+<div id="headerbg"><p class="text1">&#8220;To begin, we must first BUILD&#8221; <br />
+	-Anonymous</p>
+</div>
+
+<!-- start latest-post -->
+<div id="latest-post" class="post">
+</div>
+
+
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+	        <h1 class="title"><u>Help us make the plan best suited for you!</u></h1>
+
+			<div class="entry">
+                <p> Please answer these questions to allow our algorithm to determine the best possible fitness plan for you. </p>
+
+
+                <div class="planname">
+                   <p> <b>Choose a Name for your Plan: </b></p>
+                   <input id="planName" />
+                </div> <br>
+
+                <div class="heightWeight">
+                    <div class="height">
+                        <p> <b>What is your height? </b></p>
+                        <select id="height">
+                          <option value="1">Below 5'0</option>
+                          <option value="2">5'0-5'3</option>
+                          <option value="3">5'3-5'6</option>
+                          <option value="4">5'6-5'9</option>
+                          <option value="5">5'9-6'0</option>
+                          <option value="6">6'0-6'3</option>
+                          <option value="7">Above 6'3</option>
+                        </select>
+                    </div>
+
+                    <table> <tr> <td> <hr> </td> </tr> </table>
+
+                    <div class="weight">
+                        <p> <b>What is your weight?</b> </p>
+                        <select id="weight">
+                          <option value="1">Below 100 lbs</option>
+                          <option value="2">100-125lbs</option>
+                          <option value="3">125-150lbs</option>
+                          <option value="4">150-175lbs</option>
+                          <option value="5">175-200lbs</option>
+                          <option value="6">200-225lbs</option>
+                          <option value="7">225-250lbs</option>
+                          <option value="8">Above 250 lbs</option>
+                        </select>
+                    </div>
+                </div>
+
+            <!-- Frequency Slider -->
+
+                <p>
+                  <label for="amount"><b> How Often Do You Workout? (Per Week) </b></label>
+                  <div id="slider-freq"></div>
+                  <input type="text" id="freq" readonly style="border:0; color:#4682B4; font-weight:bold; font-size: 30px; text-align:center">
+                </p>
+
+                <p> <b> Which Workouts Seem The Best Fit For You? </b> </p> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;
+                Cardio: <i class="fas fa-running fa-2x"></i> &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                Weightlifting: <i class="fas fa-dumbbell fa-2x"></i> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                A Mix of Both: <i class="fas fa-exchange-alt fa-2x"></i>
+
+                &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                <input type="radio" id="cardio" value="1" v-model="pickedType"> &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;
+
+                <input type="radio" id="weightlifting" value="2" v-model="pickedType"> &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+
+                <input type="radio" id="mix" value="3" v-model="pickedType">
+
+                <br> <br>
+
+                <p> <b> What is your goal? </b> </p> &nbsp; &nbsp;&nbsp; &nbsp;
+                Lose Weight: <i class="fas fa-weight fa-2x"></i> &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                Gain Muscle: <i class="fas fa-dumbbell fa-2x"></i> &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                To Simply Be Fit!: <i class="fas fa-child fa-2x"></i>
+
+                &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                <input type="radio" id="loseWeight" value="1" v-model="pickedGoals"> &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;
+
+                <input type="radio" id="gainMuscle" value="2" v-model="pickedGoals"> &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+
+                <input type="radio" id="beFit" value="3" v-model="pickedGoals">
+
+                <br> <br>
+			</div>
+	</div>
+
+    <div class="container">
+                <button v-on:click="savePlan()">Submit</button>
+    </div>
+
+<p> &nbsp; Currently logged in as: ${ curUser }</p>
+
+	<div id="sidebar">
+		<ul>
+
+		</ul>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end sidebar -->
+</div>
+<!-- end page -->
+<br><br><br><br><br>
+
+</div>
+<script src="{{=URL('static','js/plan.js')}}"></script>
+
+

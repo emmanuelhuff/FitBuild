@@ -1,0 +1,77 @@
+{{ extend 'layout.html'}}
+
+{{block head}}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var Save_Plan = "{{=URL('api', 'Save_Plan') }}";
+
+    var get_all_movies = "{{=URL('api', 'get_all_movies') }}";
+    var get_all_replies = "{{=URL('api', 'get_all_replies') }}";
+    var getcurUser = "{{=URL('api', 'getcurUser') }}";
+    var insert_movie = "{{=URL('api', 'insert_movie', user_signature=True) }}";
+    var insert_reply = "{{=URL('api', 'insert_reply', user_signature=True) }}";
+    var set_thumb = "{{=URL('api', 'set_thumb' , user_signature=True)}}";
+    var delete_post = "{{=URL('default', 'delete') }}";
+    var edit_post = "{{=URL('default', 'edit')}}";
+    var set_reply = "{{=URL('api', 'set_reply' , user_signature=True)}}";
+</script>
+{{end}}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Puzzled by Emmanuel Huff</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+
+<link rel="stylesheet" href="{{=URL('static', 'font-awesome-4.6.3/css/font-awesome.min.css')}}">
+<link rel="stylesheet" href="{{=URL('static', 'css/default.css')}}">
+</head>
+<body>
+
+<!-- start header -->
+{{include 'default/header.html'}}
+<!-- end header -->
+
+<div id="headerbg"><p class="text1">&#8220;To begin, we must first BUILD&#8221; <br />
+	-Anonymous</p>
+</div>
+
+<!-- start latest-post -->
+<div id="latest-post" class="post">
+</div>
+
+<!-- start page -->
+<div id="page">
+	<!-- start content -->
+	<div id="content">
+
+			<h1 class="title">Welcome to FitBuild! This is your first step towards getting fit.</h1>
+
+
+			<div class="entry">
+
+				<p> Often times when people first begin their fitness journeys, they become confused on what exactly they should do or how to organize their own routines. <strong> FitBuild </strong> is a webapp that alleviates that confusion by providing you the means to build a fitness routine custom for you. <br><br> Whether your goal is to work your way up to running a marathon, gaining muscle, or even simply working off those extra thanksgiving pounds with some cardio, we are here to help! <p>
+
+                Let's get started shall we? <a href="plan.html"> Click here to begin... </a>
+			</div>
+
+
+	</div>
+	<!-- end content -->
+	<!-- start sidebar -->
+	<div id="sidebar">
+		<ul>
+
+		</ul>
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end sidebar -->
+</div>
+<!-- end page -->
+<br><br><br><br><br>
+</body>
+</html>
+
+
+

@@ -1,0 +1,49 @@
+.movies {
+    display: flex;
+}
+
+.movie-box {
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid black;
+    width: 260px;
+    padding: 15px;
+}
+
+.movie-title {
+    font-size: 20px;
+    text-align: center;
+}
+
+.movie-box img {
+    display: block;
+    margin: auto;
+    height: 150px;
+}
+
+.movie-box a {
+    top: 5px;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.reply-box {
+    margin-left: 5px;
+    margin-right: 5px;
+    border: 1px solid black;
+    width: 215px;
+    padding: 5px;
+}
+
+.showReplies {
+    display:inline;
+}
+
+.noShowReplies {
+    display:none;
+}
+
+.gray {
+    color: lightgray;
+}
